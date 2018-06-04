@@ -1,0 +1,38 @@
+.trainHeader {
+    background-image: url("../images/TSheader-01.png"), url("../images/trainheader2.jpg");
+    background-repeat: no-repeat;
+    background-size: contain, cover;
+    background-position: bottom, bottom;
+    width: 100%;
+    padding: 120px;
+    line-height: 175%;
+    color: white;
+    margin-bottom: 30px;
+    border-radius: 0px 0px 6px 6px;
+}
+
+.card-title {
+    padding: 10px 0px 10px 25px;
+    font-size: 14pt;
+    color: white;
+    background-color: rgb(121, 0, 0);
+}
+
+.card {
+    border: rgb(121, 0, 0) 1px solid;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.btn {
+    background-color: rgb(121, 0, 0);
+    color: white;
+}
+
+tr {
+    border-top-color: white;
+}
