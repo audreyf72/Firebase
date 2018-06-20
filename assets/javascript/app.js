@@ -15,12 +15,14 @@ $(document).ready(function() {
 var database = firebase.database();
 var currentTime = moment();
 
-function update() {
+//Adds current time to top of page
+function ticktock() {
     $('#clock').html('Current time: ' + moment().format('hh:mm a'));
   }
   
-setInterval(update, 1000);
+setInterval(ticktock, 1000);
 
+//Pull data from Firebase and adds to Trains table
 database.ref().on("child_added", function(childSnap) {
 
     var name = childSnap.val().name;
@@ -33,11 +35,6 @@ database.ref().on("child_added", function(childSnap) {
     $("#trains > tbody").append("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + next + "</td><td>" + min + "</td></tr>");
 });
 
-database.ref().on("value", function(snapshot) {
-   
-
-});
-
 //Retrieves data from the input
 $("#addTrain").on("click", function() {
 
@@ -47,25 +44,30 @@ $("#addTrain").on("click", function() {
     var frequency = $("#frequency").val().trim();
 
 //ensures that each input has a value
-    if (trainName == "") {
-        alert('Enter a train name.');
+    if (trainName == "") {    
+        $(".modal").css("display", "block");
+        $(".message").text("Please enter your train name.");    
         return false;
     }
     if (destination == "") {
-        alert('Enter a destination.');
+        $(".modal").css("display", "block");
+        $(".message").text("Please enter the destination.");
         return false;
     }
     if (firstTrain == "") {
-        alert('Enter the first train time.');
+        $(".modal").css("display", "block");
+        $(".message").text("Please enter the time of the first train.");
         return false;
     }
     if (frequency == "") {
-        alert('Enter a frequency');
+        $(".modal").css("display", "block");
+        $(".message").text("Please enter the train frequency in minutes.");
         return false;
     }
 
     // THE MATH!
-    var firstTrainConverted = moment(firstTrain, "hh:mm");
+
+    var firstTrainConverted = moment(firstTrain, "hh:mm").subtract("1, years");
     // the time difference between current time and the first train
     var difference = currentTime.diff(moment(firstTrainConverted), "minutes");
     var remainder = difference % frequency;
@@ -90,6 +92,10 @@ $("#addTrain").on("click", function() {
     $("#frequency").val("");
 
     return false;
+});
+
+$(".close").on("click", function(){
+    $(".modal").css("display", "none");
 });
 
 });
