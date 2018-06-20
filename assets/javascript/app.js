@@ -15,6 +15,12 @@ $(document).ready(function() {
 var database = firebase.database();
 var currentTime = moment();
 
+function update() {
+    $('#clock').html('Current time: ' + moment().format('hh:mm a'));
+  }
+  
+setInterval(update, 1000);
+
 database.ref().on("child_added", function(childSnap) {
 
     var name = childSnap.val().name;
@@ -32,7 +38,7 @@ database.ref().on("value", function(snapshot) {
 
 });
 
-//grabs information from the form
+//Retrieves data from the input
 $("#addTrain").on("click", function() {
 
     var trainName = $("#trainName").val().trim();
@@ -40,7 +46,7 @@ $("#addTrain").on("click", function() {
     var firstTrain = $("#firstTrain").val().trim();
     var frequency = $("#frequency").val().trim();
 
-    //ensures that each input has a value
+//ensures that each input has a value
     if (trainName == "") {
         alert('Enter a train name.');
         return false;
@@ -50,7 +56,7 @@ $("#addTrain").on("click", function() {
         return false;
     }
     if (firstTrain == "") {
-        alert('Enter a first train time.');
+        alert('Enter the first train time.');
         return false;
     }
     if (frequency == "") {
@@ -59,8 +65,7 @@ $("#addTrain").on("click", function() {
     }
 
     // THE MATH!
-    //subtracts the first train time back a year to ensure it's before current time.
-    var firstTrainConverted = moment(firstTrain, "hh:mm").subtract("1, years");
+    var firstTrainConverted = moment(firstTrain, "hh:mm");
     // the time difference between current time and the first train
     var difference = currentTime.diff(moment(firstTrainConverted), "minutes");
     var remainder = difference % frequency;
@@ -81,7 +86,7 @@ $("#addTrain").on("click", function() {
 
     $("#trainName").val("");
     $("#destination").val("");
-    $("#firstTrain").val("");
+    $("#firstTrain").val("00:00");
     $("#frequency").val("");
 
     return false;
