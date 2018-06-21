@@ -7,35 +7,36 @@ var config = {
     storageBucket: "",
     messagingSenderId: "702358806553"
   };
-  firebase.initializeApp(config);
+
+firebase.initializeApp(config);
+var database = firebase.database();
 
 //Initialize document ready function
 $(document).ready(function() {  
 
-var database = firebase.database();
 var currentTime = moment();
 
 //Adds current time to top of page
 function ticktock() {
-    $('#clock').html('Current time: ' + moment().format('hh:mm a'));
+    $('#clock').html('Current time: ' + currentTime.format('hh:mm a'));
   }
   
 setInterval(ticktock, 1000);
 
 //Pull data from Firebase and adds to Trains table
-database.ref().on("child_added", function(childSnap) {
+database.ref().on("child_added", function(snapshot) {
 
-    var name = childSnap.val().name;
-    var destination = childSnap.val().destination;
-    var firstTrain = childSnap.val().firstTrain;
-    var frequency = childSnap.val().frequency;
-    var min = childSnap.val().min;
-    var next = childSnap.val().next;
+    var name = snapshot.val().name;
+    var destination = snapshot.val().destination;
+    var firstTrain = snapshot.val().firstTrain;
+    var frequency = snapshot.val().frequency;
+    var min = snapshot.val().min;
+    var next = snapshot.val().next;
 
     $("#trains > tbody").append("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + next + "</td><td>" + min + "</td></tr>");
 });
 
-//Retrieves data from the input
+//Retrieves values from the input
 $("#addTrain").on("click", function() {
 
     var trainName = $("#trainName").val().trim();
@@ -67,12 +68,13 @@ $("#addTrain").on("click", function() {
 
     // THE MATH!
 
-    var firstTrainConverted = moment(firstTrain, "hh:mm").subtract("1, years");
+    var firstTrainConverted = moment(firstTrain, "hh:mm a").subtract("1, years");
+    
     // the time difference between current time and the first train
     var difference = currentTime.diff(moment(firstTrainConverted), "minutes");
     var remainder = difference % frequency;
     var minUntilTrain = frequency - remainder;
-    var nextTrain = moment().add(minUntilTrain, "minutes").format("hh:mm a");
+    var nextTrain = currentTime.add(minUntilTrain, "minutes").format("hh:mm a");
 
     var newTrain = {
         name: trainName,

@@ -4,13 +4,13 @@
 
 #clock {
     color: rgb(255, 98, 0);
-    width: 90%;
+    width: 100%;
     text-align: right;
     max-width: 1020px;
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0px 80px 0px 80px;
+    padding: 0px 60px 0px 60px;
 }
 
 body, html {
@@ -22,11 +22,12 @@ body, html {
     background-repeat: no-repeat;
     background-size: contain;
     background-position-y: bottom;
+    background-position-x: center; 
 }
 
 header {
     display: flex;
-    margin-top: 10px;
+    margin-top: 5px;
     background-image: url("../images/HeaderBackground-01.png");
     background-repeat: no-repeat;
     background-size: 100%;
@@ -45,6 +46,7 @@ table {
     line-height: 220%;
     text-align: center;
     margin-bottom: 40px;
+    margin-top: 5px;
 }
 
 thead {
@@ -69,14 +71,21 @@ tbody tr:nth-child(even) {
     background: black;
 }
 
-.row {
-    display: block;
+.flexContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1020px;
     margin-left: auto;
     margin-right: auto;
-    padding: 10px 80px 30px 80px;
-    width: 90%;
-    max-width: 1020px;
+    width: 100%;
+    height: auto;
+    padding: 0px 10px 50px 10px;
     background-color: rgba(0, 0, 0, .7);
+}
+
+.row {
+    width: 90%;
     color:white;
 }
 
@@ -84,7 +93,6 @@ h4 {
     font-size: 24pt;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 5px;
     color: white;
     text-transform: uppercase;
 }
@@ -190,4 +198,52 @@ input {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+@media screen and (max-width: 840px){
+.row {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.leftBlock {
+    width: 100%;
+    float: none;
+    padding: 0;
+    }
+
+.rightBlock {
+    width: 100%;
+    float: none;
+    padding: 0;
+    }
+
+.buttonRow {
+    float: none;
+}    
+
+table {
+    line-height: 110%;
+}
+
+.formRow {
+    display: flow-root;
+}
+
+#clock {
+    text-align: center;
+}
+
+thead {
+    line-height: 110%;
+}
+
+tr {
+    height: 50px;
+}
+
+td {
+    padding: 0px 5px 0px 5px;
+}
+
 }
