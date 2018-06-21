@@ -226,10 +226,6 @@ table {
     line-height: 110%;
 }
 
-.formRow {
-    display: flow-root;
-}
-
 #clock {
     text-align: center;
 }
