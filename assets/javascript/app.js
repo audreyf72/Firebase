@@ -4,11 +4,12 @@ var config = {
     authDomain: "train-tracker-f8064.firebaseapp.com",
     databaseURL: "https://train-tracker-f8064.firebaseio.com",
     projectId: "train-tracker-f8064",
-    storageBucket: "",
+    storageBucket: "Traintimes",
     messagingSenderId: "702358806553"
   };
 
 firebase.initializeApp(config);
+
 var database = firebase.database();
 
 //Initialize document ready function
@@ -18,7 +19,7 @@ var currentTime = moment();
 
 //Adds current time to top of page
 function ticktock() {
-    $('#clock').html('Current time: ' + currentTime.format('hh:mm a'));
+    $('#clock').html('Current time: ' + moment().format('hh:mm a'));
   }
   
 setInterval(ticktock, 1000);
@@ -68,7 +69,7 @@ $("#addTrain").on("click", function() {
 
     // THE MATH!
 
-    var firstTrainConverted = moment(firstTrain, "hh:mm a").subtract("1, years");
+    var firstTrainConverted = moment(firstTrain, "HH:mm").subtract("1, years");
     
     // the time difference between current time and the first train
     var difference = currentTime.diff(moment(firstTrainConverted), "minutes");
